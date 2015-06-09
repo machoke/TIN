@@ -1,0 +1,83 @@
+QUESTION:
+Jaka jest dziś pogoda?
+ANSWER:
+Pogoda jest słaba.
+END.
+
+
+
+QUESTION:
+Czy pogoda dzisiaj jest dobra?
+QUESTION:
+Czy pogoda dzisiaj jest słaba?
+ANSWER:
+Pogoda dzisiaj jest dobra.
+END.
+
+QUESTION:
+Podaj imię.
+ANSWER:
+Adrian
+QUESTION:
+Podaj nazwisko.
+ANSWER:
+Nowak
+END.
+
+QUESTION:
+Mam ochotę zjeść ([a-z]+).
+ANSWER:
+Przygotowuję <1>. Może być z serem?
+QUESTION:
+([a-z]+)
+ANSWER:
+Jako odpowiedź przyjmuję <3>. 
+A zatem przygotuję <1>, a jeśli chodzi o ser, to: <3>.
+END.
+
+CONNECTED:
+Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+SKIP:
+ANSWER:
+Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+ANSWER:
+Login: root.
+ANSWER:
+Hasło: kot.
+SKIP:
+ANSWER:
+Dziękuję za logowanie.
+END.
+
+CONNECTED:
+Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+SKIP:
+ANSWER:
+Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+ANSWER:
+Login: root.
+ANSWER:
+Hasło: kot.
+SKIP:
+ANSWER:
+Dziękuję za logowanie.
+END.
+
+QUESTION:
+Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+ANSWER:
+Proszę się zalogować.
+END.
+
+QUESTION:
+Hasło: kot.
+ANSWER:
+Prawidłowe hasło.
+END.
+
+END.
+
+SKIP:
+ANSWER:
+Brak zapytania w bazie. Spróbuj jeszcze raz.
+END.

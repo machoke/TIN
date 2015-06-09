@@ -1,0 +1,5 @@
+QUESTION:
+chce ([a-z]+)
+ANSWER:
+Przygotowuję <0>.
+END.
