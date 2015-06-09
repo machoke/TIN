@@ -63,11 +63,9 @@ public:
 	void PrintRules();
 
 	void Ask(string sentence);
-	void Respond(string sentence);
 	void (*OutsideRespond)(string sentence);
 	void Connect();
 
-	void Work();
 private:
 	vector<Rule> rules;
 	queue<string> questions;
@@ -76,6 +74,9 @@ private:
 	int RuleStepID, RuleID;
 
 	regmatch_t pmatch[maxSubexpressions];
+
+	void Work();
+	void Respond(string sentence);
 
 	bool AreWeInsideRule();
 	void FindFirstQuestion();
