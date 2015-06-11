@@ -37,6 +37,15 @@ int main(int argc, char **argv)
 
 	while( 1 )
     {
+		//Tego chyba nie da się zrealizować w ten sposób,
+		//tak, aby sprawnie prowadzić komunikację z serwerem.
+		//I żeby nie było przekłamań kolejności.
+
+		//Być może spanie na samym dole załatwia póki co sprawę.
+
+		//Notabene nie jest to jakiś istotny problem, gdyż poniższy kod
+		//powinien być prawie identyczny z serwerowym w ostatecznym dziele.
+
 		std::string tTemp;
 
 		tTemp = polaczenie.readC();
@@ -45,6 +54,7 @@ int main(int argc, char **argv)
 
 		getline(std::cin, tTemp);
 		polaczenie.writeC(tTemp);
+		sleep(1);
     }
     
     polaczenie.close();

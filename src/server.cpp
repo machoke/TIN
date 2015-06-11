@@ -64,11 +64,14 @@ int main(int argc, char **argv)
 	time_t czas = 0;
 	while( 1 )
     {
+		//Poniższe read jest nieblokujące. Tak chyba powinno być.
 		string odczyt = polaczenie.read();
 		if(odczyt.empty()){
 			sleep(1);
 		}else{
 			std::cout << "OTRZYMANO: " << odczyt << endl;
+			//Poniższa operacja wykonuje reguły do oporu i wysyła w między czasie dane przez
+			//OutsideRespond() do zatrzymania. Tak chyba powinno być.
 			parser.Ask(odczyt);
 		}
     }
