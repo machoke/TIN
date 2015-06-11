@@ -44,9 +44,9 @@ int main(int argc, char **argv)
 	polaczenie.listenS();
 	polaczenie.acceptS();
 	
-	std::fstream fileLog;	// plik z komendami do wysylania
+	std::fstream fileLog;	// plik logów
 	fileLog.open( "log.txt", std::ios::out );
-	//otwieram plik z komendami do wyswietlenia
+	//otwieram plik z logami
 	if( !fileLog.good() ) {
 		std::cout << "Nie utworzono pliku do zapisu" << std::endl;
 		exit(1);
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 	parser.Connect();
 
 	std::string tTemp, tText;
-	time_t czas = 0;   //czas	ctime(& czas)
+	time_t czas = 0;
 	while( 1 )
     {
 		string odczyt = polaczenie.read();
