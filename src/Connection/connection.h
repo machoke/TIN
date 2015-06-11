@@ -11,6 +11,7 @@
 #include <string>
 #include <errno.h>
 #include <unistd.h>
+#include <fstream>
 
 class Connection {
 	struct sockaddr_in serwer;

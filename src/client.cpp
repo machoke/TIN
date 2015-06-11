@@ -26,8 +26,11 @@ Connection* PolaczenieDoWysylki;
 Parser *parser;
 int CyklicznyCzas;
 
+fstream plikLogow;
+
 void wyslij(string wiadomosc){
 	std::cout << "WYSLANO: " << wiadomosc << endl;
+	plikLogow << "W:" << wiadomosc << endl;
 	PolaczenieDoWysylki->writeC(wiadomosc);
 }
 
@@ -39,9 +42,18 @@ void Zegar(int a){
 int main(int argc, char **argv)
 {
 	std::cout << "hello\n";
-	
-	Connection polaczenie = Connection(SERWER_PORT, SERWER_IP);
+
+	ConnectionSettings *conn;
+		if(argc == 2)
+			conn = new ConnectionSettings(argv[1]);
+		else
+			conn = new ConnectionSettings("conf_client.ini");
+	Connection polaczenie = Connection(conn->port, conn->addressIP);
 	polaczenie.connectC();
+
+	plikLogow.open(conn->logFile.c_str(), ios::out);
+
+	delete conn;
 
 	std::fstream fileLog;	// plik z komendami do wysylania
 	fileLog.open( "log.txt", std::ios::out );
@@ -64,14 +76,14 @@ int main(int argc, char **argv)
 		odczyt = polaczenie.readC();
 		if(!odczyt.empty()){
 			cout << "ODCZYT: " << odczyt << endl;
+			plikLogow << "O:" << odczyt << endl;
 			parser->Ask(odczyt);
 		}
     }
     
     polaczenie.close();
 	
-//	fileSt.close();
-	fileLog.close();
+    plikLogow.close();
 	
 	//-------------------------------------------------------------------------------
 	

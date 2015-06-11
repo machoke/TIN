@@ -1,0 +1,22 @@
+W:Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+O:Proszę się zalogować.
+W:Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+W:Login: root.
+W:Hasło: kot.
+O:Prawidłowe hasło.
+W:Dziękuję za logowanie.
+O:Cykliczna wiadomosc!
+W:Ping!
+O:Wporzo.
+O:Cykliczna wiadomosc!
+W:Ping!
+O:Wporzo.
+O:Cykliczna wiadomosc!
+W:Ping!
+O:Wporzo.
+O:Cykliczna wiadomosc!
+W:Ping!
+O:Wporzo.
+O:Cykliczna wiadomosc!
+W:Ping!
+O:Wporzo.

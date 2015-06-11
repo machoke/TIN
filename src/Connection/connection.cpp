@@ -83,7 +83,7 @@ std::string Connection::read() {
         	}
         }
 		temp=bufor;
-				
+
 		return temp;
 }
 //s
@@ -115,7 +115,7 @@ std::string Connection::readC() {
 			}
         }
 		temp=bufor;
-		
+
 		return temp;
 }
 //c

@@ -31,12 +31,15 @@ std::vector <std::string> openConf();
 Connection* PolaczenieDoWysylki;
 Parser* parser;
 
+fstream plikLogow;
+
 bool printLogs = false;
 
 
 void wyslij(string wiadomosc){
 	if(printLogs)
 		std::cout << "WYSLANO: " << wiadomosc << endl;
+	plikLogow << "W:" << wiadomosc << endl;
 	PolaczenieDoWysylki->write(wiadomosc);
 }
 
@@ -56,6 +59,7 @@ void* CommunicationThread(void *ptr){
 		if(!odczyt.empty()){
 			if(printLogs)
 				std::cout << "ODEBRANO: " << odczyt << endl;
+			plikLogow << "O:" << odczyt << endl;
 			parser->Ask(odczyt);
 		}
 	}
@@ -65,9 +69,16 @@ int main(int argc, char **argv)
 {
 	pthread_t commThread;
 	
-	// na sztywno ustawione conf.ini w funkcji readSettings()
-	ConnectionSettings conn = ConnectionSettings("conf.ini");
-	Connection polaczenie = Connection(SERWER_PORT, SERWER_IP);
+	ConnectionSettings *conn;
+	if(argc == 2)
+		conn = new ConnectionSettings(argv[1]);
+	else
+		conn = new ConnectionSettings("conf_server.ini");
+	Connection polaczenie = Connection(conn->port, conn->addressIP);
+
+	plikLogow.open(conn->logFile.c_str(), ios::out);
+
+	delete conn;
 	
 	polaczenie.bindS();
 	polaczenie.listenS();
@@ -81,7 +92,7 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 	
-	std::cout << "Polaczono!" << std::endl;
+	std::cout << "Connected!" << std::endl;
 
 	parser = new Parser("rules.txt");
 	PolaczenieDoWysylki = &polaczenie;
