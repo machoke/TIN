@@ -2,6 +2,12 @@
 Aktualne:
 
 Serwer mniej więcej jest prawidłowy.
+Przyjmuje komendy (case-sensitive):
+show - wyświetla komunikację - enter aby wrócić do komend. W tym trybie serwer rozpoczyna pracę.
+
+send wiadomosc - wysyla wiadomosc
+
+exit - konczy dzialanie serwera
 
 Klient raczej gotowy.
 
