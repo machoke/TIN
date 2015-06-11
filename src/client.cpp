@@ -53,7 +53,6 @@ int main(int argc, char **argv)
 
 	plikLogow.open(conn->logFile.c_str(), ios::out);
 
-	delete conn;
 
 	std::fstream fileLog;	// plik z komendami do wysylania
 	fileLog.open( "log.txt", std::ios::out );
@@ -62,7 +61,7 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
-	parser = new Parser("rulesclient.txt");
+	parser = new Parser(conn->rulesFile.c_str());
 	PolaczenieDoWysylki = &polaczenie;
 	parser->OutsideRespond = wyslij;
 	CyklicznyCzas = parser->getCyclicTime();
@@ -70,6 +69,7 @@ int main(int argc, char **argv)
 	signal(SIGALRM, Zegar);
 	alarm(CyklicznyCzas);
 
+	delete conn;
 	std::string odczyt;
 	while( 1 )
     {

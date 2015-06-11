@@ -34,6 +34,10 @@ void ConnectionSettings::readSettings(std::string nameFile) {
 	getline(fileConf, tText);
 	logFile=tText;
 
+	getline(fileConf, tText);
+	getline(fileConf, tText);
+	rulesFile=tText;
+
 
 	
 	fileConf.close();

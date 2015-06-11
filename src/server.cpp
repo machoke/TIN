@@ -78,7 +78,6 @@ int main(int argc, char **argv)
 
 	plikLogow.open(conn->logFile.c_str(), ios::out);
 
-	delete conn;
 	
 	polaczenie.bindS();
 	polaczenie.listenS();
@@ -94,7 +93,7 @@ int main(int argc, char **argv)
 	
 	std::cout << "Connected!" << std::endl;
 
-	parser = new Parser("rules.txt");
+	parser = new Parser(conn->rulesFile.c_str());
 	PolaczenieDoWysylki = &polaczenie;
 	parser->OutsideRespond = wyslij;
 
@@ -113,6 +112,7 @@ int main(int argc, char **argv)
 	cout << "TRYB KOMEND!" << endl;
 	printLogs = false;
 
+	delete conn;
 	while( 1 )
     {
 		getline(std::cin,command);

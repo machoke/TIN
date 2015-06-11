@@ -4,18 +4,4 @@ O:Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
 O:Login: root.Hasło: kot.
 W:Prawidłowe hasło.
 O:Dziękuję za logowanie.
-W:Cykliczna wiadomosc!
-O:Ping!
-W:Wporzo.
-W:Cykliczna wiadomosc!
-O:Ping!
-W:Wporzo.
-W:Cykliczna wiadomosc!
-O:Ping!
-W:Wporzo.
-W:Cykliczna wiadomosc!
-O:Ping!
-W:Wporzo.
-W:Cykliczna wiadomosc!
-O:Ping!
-W:Wporzo.
+O:asoipdjfjipoasdf
