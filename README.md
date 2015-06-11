@@ -1,6 +1,6 @@
 # TIN
 Aktualne:
-
+asd
 Serwer mniej więcej jest prawidłowy.
 Przyjmuje komendy (case-sensitive):
 
