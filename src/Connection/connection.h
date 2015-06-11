@@ -10,6 +10,7 @@
 #include <unistd.h>
 #include <string>
 #include <errno.h>
+#include <unistd.h>
 
 class Connection {
 	struct sockaddr_in serwer;

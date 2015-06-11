@@ -8,13 +8,16 @@
 #include <fstream>
 #include <regex.h>
 #include <algorithm>
+#include <unistd.h>
+
+//#define DEBUG_LOG
 
 using namespace std;
 
 #define maxSubexpressions 22
 
 enum RuleType{
-	Rule_NONE, Rule_QUESTION, Rule_ANSWER, Rule_END, Rule_CONNECTED, Rule_SKIP
+	Rule_NONE, Rule_QUESTION, Rule_ANSWER, Rule_END, Rule_CONNECTED, Rule_SKIP, Rule_WAIT, Rule_CYCLIC
 };
 
 class RuleStep{
@@ -65,6 +68,8 @@ public:
 	void Ask(string sentence);
 	void (*OutsideRespond)(string sentence);
 	void Connect();
+	void Cyclic();
+	int getCyclicTime();
 
 private:
 	vector<Rule> rules;

@@ -6,6 +6,8 @@
 #include "Connection/connection.h"
 #include <ctime>
 #include <vector>
+#include <pthread.h>
+#include <sstream>
 
 #include "Parser/Parser.h"
 
@@ -18,6 +20,7 @@
 
 
 pthread_mutex_t bufferMutex = PTHREAD_MUTEX_INITIALIZER;
+std::queue<string> CommandBuffor;
 
 Statement obiekt = Statement();
 
@@ -26,15 +29,41 @@ Statement obiekt = Statement();
 std::vector <std::string> openConf();
 
 Connection* PolaczenieDoWysylki;
+Parser* parser;
+
+bool printLogs = false;
 
 
 void wyslij(string wiadomosc){
-	std::cout << "WYSLANO: " << wiadomosc << endl;
+	if(printLogs)
+		std::cout << "WYSLANO: " << wiadomosc << endl;
 	PolaczenieDoWysylki->write(wiadomosc);
+}
+
+void* CommunicationThread(void *ptr){
+	string odczyt;
+	while(1){
+		if(!CommandBuffor.empty()){
+			pthread_mutex_lock(&bufferMutex);
+			while(!CommandBuffor.empty()){
+				wyslij(CommandBuffor.front());
+				CommandBuffor.pop();
+
+			}
+			pthread_mutex_unlock(&bufferMutex);
+		}
+		odczyt = PolaczenieDoWysylki->read();
+		if(!odczyt.empty()){
+			if(printLogs)
+				std::cout << "ODEBRANO: " << odczyt << endl;
+			parser->Ask(odczyt);
+		}
+	}
 }
 
 int main(int argc, char **argv)
 {
+	pthread_t commThread;
 	
 	// na sztywno ustawione conf.ini w funkcji readSettings()
 	ConnectionSettings conn = ConnectionSettings("conf.ini");
@@ -54,77 +83,56 @@ int main(int argc, char **argv)
 	
 	std::cout << "Polaczono!" << std::endl;
 
-	Parser parser("rules.txt");
+	parser = new Parser("rules.txt");
 	PolaczenieDoWysylki = &polaczenie;
-	parser.OutsideRespond = wyslij;
+	parser->OutsideRespond = wyslij;
 
-	parser.Connect();
+	parser->Connect();
 
 	std::string tTemp, tText;
 	time_t czas = 0;
+
+	int thread_test = pthread_create( &commThread, NULL, CommunicationThread, 0);
+
+	string command, interpret_cmd;
+
+	cout << "LOGI NA EKRAN!" << endl;
+	printLogs = true;
+	std::cin.ignore();
+	cout << "TRYB KOMEND!" << endl;
+	printLogs = false;
+
 	while( 1 )
     {
-		//Poniższe read jest nieblokujące. Tak chyba powinno być.
-		string odczyt = polaczenie.read();
-		if(odczyt.empty()){
-			sleep(1);
-		}else{
-			std::cout << "OTRZYMANO: " << odczyt << endl;
-			//Poniższa operacja wykonuje reguły do oporu i wysyła w między czasie dane przez
-			//OutsideRespond() do zatrzymania. Tak chyba powinno być.
-			parser.Ask(odczyt);
-		}
+		getline(std::cin,command);
+		stringstream stream(command);
+		stream >> interpret_cmd;
+
+		if(interpret_cmd.compare("send")==0){
+			pthread_mutex_lock(&bufferMutex);
+			CommandBuffor.push(command.substr(5, std::string::npos));
+			pthread_mutex_unlock(&bufferMutex);
+		}else
+			if(interpret_cmd.compare("exit")==0){
+				pthread_cancel(commThread);
+				break;
+			}else
+				if(interpret_cmd.compare("show")==0){
+					cout << "LOGI NA EKRAN!" << endl;
+					printLogs = true;
+					std::cin.ignore();
+					cout << "TRYB KOMEND!" << endl;
+					printLogs = false;
+				}
+		interpret_cmd = "";
+		command = "";
     }
     
     polaczenie.close();	
+    cout << "ZAMYKAM!" << endl;
 	fileLog.close();
 
 	return 0;
 }
 
 
-
-
-/*
-
-void* watekPierwszy( void *_argum) {
-	//string odczytanyKomunikat = odczytaniezPliku();
-	std::string odczytanyKomunikat = "test";
-	
-	while (1) {
-	
-//	pthread_mutex_lock(&bufferMutex);
-//	obiekt.setText(odczytanyKomunikat);	// wstawienie do bufora komunikatow z pliku
-//	pthread_mutex_unlock(&bufferMutex);
-	
-	
-	
-	std::cout << "test nr. : ";
-	
-	
-	// wyslanie zapis do pliku
-	//odebranie polaczenia
-	//zapis do pliku
-	
-	}
-//pthread_exit(NULL);
- // return 0;
-}
-
-/*
-/*
-void* watekDrugi(void *_argum) {
-	// odczyt z klawiatury
-	
-	// ewentualnhy zapis do kolejki
-//	pthread_mutex_lock(&bufferMutex);
-//	obiekt.setText(odczytanyKomunikat);	// wstawienie do bufora komunikatow z pliku
-//	pthread_mutex_unlock(&bufferMutex);
- * 
- * 
-	
-pthread_exit(NULL);
- // return 0;
-}
-
-*/

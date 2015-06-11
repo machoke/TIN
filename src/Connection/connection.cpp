@@ -7,7 +7,9 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include "connection.h"
-#include <fcntl.h>    //
+#include <fcntl.h>
+#include <unistd.h>
+
 #define MAX_CONNECTION 1
 #define MAX_MSG_LEN 4096
 
@@ -73,10 +75,12 @@ std::string Connection::read() {
 	    bzero( bufor, sizeof( bufor ) );
         std::string temp;
 		
-		if(( recv( gniazdo_clienta, bufor, sizeof( bufor ), 0 ) ) <= 0 )
+		if(( recv( gniazdo_clienta, bufor, sizeof( bufor ), MSG_DONTWAIT ) ) <= 0 )
         {
-            perror( "recv() ERROR" );
-            exit( - 1 );
+			if(!(errno == EAGAIN || errno == EWOULDBLOCK)){
+				perror( "recv() ERROR" );
+				exit( - 1 );
+        	}
         }
 		temp=bufor;
 				
@@ -102,11 +106,13 @@ std::string Connection::readC() {
 	    bzero( bufor, sizeof( bufor ) );
         std::string temp;
 		
-		if(( recv( gniazdo, bufor, sizeof( bufor ), MSG_DONTWAIT ) ) <= 0 )
+		if(( recv( gniazdo, bufor, sizeof( bufor ), /*MSG_DONTWAIT*/0 ) ) <= 0 )
         {
-			if(!(errno == EAGAIN || errno == EWOULDBLOCK))
+			if(!(errno == EAGAIN || errno == EWOULDBLOCK)){
 				perror( "recv() ERROR" );
- //           exit( - 1 );
+				close();
+				exit( - 1 );
+			}
         }
 		temp=bufor;
 		
@@ -140,6 +146,7 @@ void Connection::connectC() {
 
 void Connection::close() {
 	shutdown( gniazdo, SHUT_RDWR );
+	//close(gniazdo);
 }
 
 std::string Connection::getIP() {

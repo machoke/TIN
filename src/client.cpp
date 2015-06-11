@@ -5,6 +5,9 @@
 #include <fstream>
 #include "Connection/connection.h"
 #include <ctime>
+#include "Parser/Parser.h"
+#include <signal.h>
+#include <unistd.h>
 //#include <pthread.h>
 //#include <unistd.h>
 
@@ -19,7 +22,19 @@ Statement obiekt = Statement();
 //void* watekPierwszy( void *_argum);
 //void* watekDrugi( void *_argum);
 
+Connection* PolaczenieDoWysylki;
+Parser *parser;
+int CyklicznyCzas;
 
+void wyslij(string wiadomosc){
+	std::cout << "WYSLANO: " << wiadomosc << endl;
+	PolaczenieDoWysylki->writeC(wiadomosc);
+}
+
+void Zegar(int a){
+	parser->Cyclic();
+	alarm(CyklicznyCzas);
+}
 
 int main(int argc, char **argv)
 {
@@ -35,26 +50,22 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 
+	parser = new Parser("rulesclient.txt");
+	PolaczenieDoWysylki = &polaczenie;
+	parser->OutsideRespond = wyslij;
+	CyklicznyCzas = parser->getCyclicTime();
+
+	signal(SIGALRM, Zegar);
+	alarm(CyklicznyCzas);
+
+	std::string odczyt;
 	while( 1 )
     {
-		//Tego chyba nie da się zrealizować w ten sposób,
-		//tak, aby sprawnie prowadzić komunikację z serwerem.
-		//I żeby nie było przekłamań kolejności.
-
-		//Być może spanie na samym dole załatwia póki co sprawę.
-
-		//Notabene nie jest to jakiś istotny problem, gdyż poniższy kod
-		//powinien być prawie identyczny z serwerowym w ostatecznym dziele.
-
-		std::string tTemp;
-
-		tTemp = polaczenie.readC();
-		std::cout << tTemp << std::endl;
-		fileLog << tTemp;
-
-		getline(std::cin, tTemp);
-		polaczenie.writeC(tTemp);
-		sleep(1);
+		odczyt = polaczenie.readC();
+		if(!odczyt.empty()){
+			cout << "ODCZYT: " << odczyt << endl;
+			parser->Ask(odczyt);
+		}
     }
     
     polaczenie.close();
@@ -69,48 +80,3 @@ int main(int argc, char **argv)
 }
 
 
-
-
-/*
-
-void* watekPierwszy( void *_argum) {
-	//string odczytanyKomunikat = odczytaniezPliku();
-	std::string odczytanyKomunikat = "test";
-	
-	while (1) {
-	
-//	pthread_mutex_lock(&bufferMutex);
-//	obiekt.setText(odczytanyKomunikat);	// wstawienie do bufora komunikatow z pliku
-//	pthread_mutex_unlock(&bufferMutex);
-	
-	
-	
-	std::cout << "test nr. : ";
-	
-	
-	// wyslanie zapis do pliku
-	//odebranie polaczenia
-	//zapis do pliku
-	
-	}
-//pthread_exit(NULL);
- // return 0;
-}
-
-/*
-/*
-void* watekDrugi(void *_argum) {
-	// odczyt z klawiatury
-	
-	// ewentualnhy zapis do kolejki
-//	pthread_mutex_lock(&bufferMutex);
-//	obiekt.setText(odczytanyKomunikat);	// wstawienie do bufora komunikatow z pliku
-//	pthread_mutex_unlock(&bufferMutex);
- * 
- * 
-	
-pthread_exit(NULL);
- // return 0;
-}
-
-*/

@@ -29,10 +29,10 @@ Parser::Parser(const char* rules_filename){
 	RuleStepID = -1;
 	fstream file;
 	bool one_connected_rule = false;
+	bool one_cyclic_rule = false;
 	bool drop_current = false;
 	bool first_line_of_message = true;
 	file.open(rules_filename);
-	//rules.clear();
 
 	string line;
 	vector<Rule>::iterator rule = rules.begin();
@@ -60,7 +60,7 @@ Parser::Parser(const char* rules_filename){
 					}
 					step.type = Rule_NONE;
 				}else
-				if(AnalizedType == Rule_CONNECTED){
+				if(AnalizedType == Rule_CONNECTED || AnalizedType == Rule_CYCLIC){
 					cout << "PARSING WARNING, line " << line_index << ": ";
 					cout << Rule::GetDirectiveString(AnalizedType);
 					cout <<" can be only at the beginning of the rule!" << endl;
@@ -83,6 +83,15 @@ Parser::Parser(const char* rules_filename){
 						drop_current = true;
 					}
 					one_connected_rule = true;
+					break;
+				case Rule_CYCLIC:
+					if(one_cyclic_rule){
+						cout << "PARSING WARNING, line " << line_index << ": ";
+						cout << Rule::GetDirectiveString(AnalizedType);
+						cout << " found more than one time! Ignoring!" << endl;
+						drop_current = true;
+					}
+					one_cyclic_rule = true;
 					break;
 				case Rule_END:
 				case Rule_ANSWER:
@@ -161,12 +170,37 @@ void Parser::Respond(string sentence){
 void Parser::Connect(){
 	for(unsigned int i = 0; i < rules.size(); i++){
 		if(rules[i].steps[0].type == Rule_CONNECTED){
+#ifdef DEBUG_LOG
 			cout << "CONNECTED found in rule!" << endl;
+#endif
 			RuleID = i;
 			RuleStepID = 0;
 			subexpressions.clear();
 			Work();
 			return;
+		}
+	}
+}
+
+void Parser::Cyclic(){
+	for(unsigned int i = 0; i < rules.size(); i++){
+		if(rules[i].steps[0].type == Rule_CYCLIC){
+#ifdef DEBUG_LOG
+			cout << "CYCLIC found in rule!" << endl;
+#endif
+			RuleID = i;
+			RuleStepID = 1;
+			subexpressions.clear();
+			Work();
+			return;
+		}
+	}
+}
+
+int Parser::getCyclicTime(){
+	for(unsigned int i = 0; i < rules.size(); i++){
+		if(rules[i].steps[0].type == Rule_CYCLIC){
+			return atoi(rules[i].steps[0].message.c_str());
 		}
 	}
 }
@@ -187,7 +221,9 @@ void Parser::Work(){
 				if(RuleStepID == 0){
 					questions.pop();
 				}else{
+#ifdef DEBUG_LOG
 					cout << "Wrong question! Searching again!" << endl;
+#endif
 				}
 				RuleID = -1;
 				RuleStepID = -1;
@@ -204,8 +240,13 @@ void Parser::Work(){
 			questions.pop();
 			break;
 
+		case Rule_WAIT:
+			sleep(atoi(step->message.c_str()));
+			break;
 		case Rule_END:
+#ifdef DEBUG_LOG
 			cout << "END of rule!" << endl;
+#endif
 		default:
 			RuleID = -1;
 			RuleStepID = -1;
@@ -235,8 +276,10 @@ bool Parser::AreWeInsideRule(){
 void Parser::FindFirstQuestion(){
 	for(unsigned int i = 0; i < rules.size(); i++){
 		if(rules[i].AskRule(0, questions.front(), maxSubexpressions, pmatch)){
+#ifdef DEBUG_LOG
 			cout << Rule::GetDirectiveString(rules[i].steps[0].type);
 			cout << " found in rule! id=" << i << endl;
+#endif
 			RuleID = i;
 			RuleStepID = 0;
 			subexpressions.clear();

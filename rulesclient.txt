@@ -6,14 +6,15 @@ ANSWER:
 Pogoda jest słaba.
 END.
 
-QUESTION:
-Cykliczna wiadomosc!
+CYCLIC:
+10
 ANSWER:
-Ping!
+Cykliczna wiadomosc!
 QUESTION:
+Ping!
+ANSWER:
 Wporzo.
 END.
-
 
 QUESTION:
 Czy pogoda dzisiaj jest dobra?

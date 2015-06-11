@@ -36,6 +36,12 @@ RuleType Rule::AnalizeDirectiveType(string message){
 	if(message.compare("SKIP:")==0){
 		return Rule_SKIP;
 	}
+	if(message.compare("WAIT:")==0){
+		return Rule_WAIT;
+	}
+	if(message.compare("CYCLIC:")==0){
+		return Rule_CYCLIC;
+	}
 	return Rule_NONE;
 }
 
@@ -51,6 +57,10 @@ string Rule::GetDirectiveString(RuleType type){
 		return "CONNECTED";
 	case Rule_SKIP:
 		return "SKIP";
+	case Rule_WAIT:
+		return "WAIT";
+	case Rule_CYCLIC:
+		return "CYCLIC";
 	}
 }
 
