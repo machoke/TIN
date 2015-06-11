@@ -102,9 +102,10 @@ std::string Connection::readC() {
 	    bzero( bufor, sizeof( bufor ) );
         std::string temp;
 		
-		if(( recv( gniazdo, bufor, sizeof( bufor ), 0 ) ) <= 0 )
+		if(( recv( gniazdo, bufor, sizeof( bufor ), MSG_DONTWAIT ) ) <= 0 )
         {
-            perror( "recv() ERROR" );
+			if(!(errno == EAGAIN || errno == EWOULDBLOCK))
+				perror( "recv() ERROR" );
  //           exit( - 1 );
         }
 		temp=bufor;

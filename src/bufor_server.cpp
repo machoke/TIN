@@ -6,10 +6,6 @@
 #include "Connection/connection.h"
 #include <ctime>
 #include <vector>
-
-#include "Parser/Parser.h"
-
-
 //#include <pthread.h>
 //#include <unistd.h>
 
@@ -25,16 +21,18 @@ Statement obiekt = Statement();
 //void* watekDrugi( void *_argum);
 std::vector <std::string> openConf();
 
-Connection* PolaczenieDoWysylki;
-
-
-void wyslij(string wiadomosc){
-	std::cout << "WYSLANO: " << wiadomosc << endl;
-	PolaczenieDoWysylki->write(wiadomosc);
-}
 
 int main(int argc, char **argv)
 {
+	pthread_t id_watku, id_watku_2;                   //identyfikator watku
+	
+
+//	pthread_create(&id_watku, NULL, watekPierwszy, &argument);
+//	pthread_create(&id_watku_2, NULL, watekDrugi, &argument);
+	// .....................
+//	pthread_join(id_watku, NULL);
+//	pthread_join( id_watku_2, NULL);
+	//----------------------------------------------------------------------------
 	
 	// na sztywno ustawione conf.ini w funkcji readSettings()
 	ConnectionSettings conn = ConnectionSettings("conf.ini");
@@ -44,6 +42,16 @@ int main(int argc, char **argv)
 	polaczenie.listenS();
 	polaczenie.acceptS();
 	
+	
+	std::fstream fileSt;	// plik z komendami do wysylania
+	fileSt.open( "test.txt", std::ios::in | std::ios::out );
+	//otwieram plik z komendami do wyswietlenia
+	if( !fileSt.good() ) {
+		std::cout << "Nie odczytano pliku z poleceniami!" << std::endl;
+		exit(1);
+	}
+	
+	
 	std::fstream fileLog;	// plik z komendami do wysylania
 	fileLog.open( "log.txt", std::ios::out );
 	//otwieram plik z komendami do wyswietlenia
@@ -52,28 +60,39 @@ int main(int argc, char **argv)
 		exit(1);
 	}
 	
-	std::cout << "Polaczono!" << std::endl;
-
-	Parser parser("rules.txt");
-	PolaczenieDoWysylki = &polaczenie;
-	parser.OutsideRespond = wyslij;
-
-	parser.Connect();
-
 	std::string tTemp, tText;
 	time_t czas = 0;   //czas	ctime(& czas)
+int kk=0;	
 	while( 1 )
     {
-		string odczyt = polaczenie.read();
-		if(odczyt.empty()){
-			sleep(1);
-		}else{
-			std::cout << "OTRZYMANO: " << odczyt << endl;
-			parser.Ask(odczyt);
+		kk++;
+		sleep(2);
+		// odczyt z pliku
+		if (!fileSt.eof()) {		
+			getline(fileSt, tText);
+			obiekt.insert(tText);	// wstawienie do bufora
 		}
+		
+		if ( obiekt.size() > 0 ) { //&& (obiekt.getText() != "") ) {			// gdy znajduje sie cos w buforze to wysylam
+			time( & czas );	// aktualny czas
+			
+			fileLog << "W[" << ctime( & czas ) << "][" << "adres_ip" << ":" << "port" << "]" << obiekt.getText() << "\n";
+			polaczenie.write( obiekt.getText()); // wyslanie
+			obiekt.erase();	// usuniecie z bufora			
+		}	
+	
+		if ( kk== 8) {
+			std::cout << "kk = 8 ";
+			obiekt.insert("dup22");
+		}
+	//	std::string tTemp = polaczenie.read(); // odebranie komunikatu
+		time( & czas );		// aktualny czas
+    //  fileLog << "O[" << ctime( & czas ) << "][" << "adres_ip" << ":" << "port" << "]" << obiekt.getText() << "\n";
+
     }
     
     polaczenie.close();	
+	fileSt.close();
 	fileLog.close();
 
 	return 0;

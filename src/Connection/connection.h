@@ -9,6 +9,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include <string>
+#include <errno.h>
 
 class Connection {
 	struct sockaddr_in serwer;
