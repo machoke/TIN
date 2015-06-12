@@ -139,6 +139,7 @@ int main(int argc, char **argv)
 		command = "";
     }
     
+    pthread_mutex_destroy(&bufferMutex);
     polaczenie.close();	
     cout << "ZAMYKAM!" << endl;
 	fileLog.close();

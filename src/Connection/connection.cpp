@@ -150,8 +150,8 @@ void Connection::close() {
 }
 
 std::string Connection::getIP() {
-		;
+  return inet_ntoa(serwer.sin_addr);
 }
 int Connection::getPort() {
-		;
+  return ntohs(serwer.sin_port);
 }
