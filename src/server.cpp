@@ -1,19 +1,12 @@
 #include <iostream>
 #include <string>
-#include "etc/statement.h"
 #include "Connection/connectionSettings.h"
 #include <fstream>
 #include "Connection/connection.h"
 #include <ctime>
-#include <vector>
 #include <pthread.h>
 #include <sstream>
-
 #include "Parser/Parser.h"
-
-
-//#include <pthread.h>
-//#include <unistd.h>
 
 #define SERWER_PORT 8888
 #define SERWER_IP "127.0.0.1"
@@ -21,12 +14,6 @@
 
 pthread_mutex_t bufferMutex = PTHREAD_MUTEX_INITIALIZER;
 std::queue<string> CommandBuffor;
-
-Statement obiekt = Statement();
-
-//void* watekPierwszy( void *_argum);
-//void* watekDrugi( void *_argum);
-std::vector <std::string> openConf();
 
 Connection* PolaczenieDoWysylki;
 Parser* parser;
