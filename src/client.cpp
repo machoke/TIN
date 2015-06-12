@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include "etc/statement.h"
 #include "Connection/connectionSettings.h"
 #include <fstream>
 #include "Connection/connection.h"
@@ -8,8 +7,6 @@
 #include "Parser/Parser.h"
 #include <signal.h>
 #include <unistd.h>
-//#include <pthread.h>
-//#include <unistd.h>
 
 #define SERWER_PORT 8888
 #define SERWER_IP "127.0.0.1"
@@ -17,10 +14,6 @@
 
 pthread_mutex_t bufferMutex = PTHREAD_MUTEX_INITIALIZER;
 ConnectionSettings conn = ConnectionSettings();
-Statement obiekt = Statement();
-
-//void* watekPierwszy( void *_argum);
-//void* watekDrugi( void *_argum);
 
 Connection* PolaczenieDoWysylki;
 Parser *parser;
