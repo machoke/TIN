@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 		odczyt = polaczenie.readC();
 		if(!odczyt.empty()){
 			cout << "ODCZYT: " << odczyt << endl;
-			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " odczyt << endl;
+			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << odczyt << endl;
 			parser->Ask(odczyt);
 		}
     }

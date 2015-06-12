@@ -46,7 +46,7 @@ void* CommunicationThread(void *ptr){
 		if(!odczyt.empty()){
 			if(printLogs)
 				std::cout << "ODEBRANO: " << odczyt << endl;
-			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " odczyt << endl;
+			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << odczyt << endl;
 			parser->Ask(odczyt);
 		}
 	}
