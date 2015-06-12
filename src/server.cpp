@@ -26,7 +26,7 @@ bool printLogs = false;
 void wyslij(string wiadomosc){
 	if(printLogs)
 		std::cout << "WYSLANO: " << wiadomosc << endl;
-	plikLogow << "W:" << wiadomosc << endl;
+	plikLogow << "W[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << wiadomosc << endl;
 	PolaczenieDoWysylki->write(wiadomosc);
 }
 
@@ -46,7 +46,7 @@ void* CommunicationThread(void *ptr){
 		if(!odczyt.empty()){
 			if(printLogs)
 				std::cout << "ODEBRANO: " << odczyt << endl;
-			plikLogow << "O:" << odczyt << endl;
+			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " odczyt << endl;
 			parser->Ask(odczyt);
 		}
 	}
