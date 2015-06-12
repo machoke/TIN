@@ -23,7 +23,7 @@ fstream plikLogow;
 
 void wyslij(string wiadomosc){
 	std::cout << "WYSLANO: " << wiadomosc << endl;
-	plikLogow << "W:" << wiadomosc << endl;
+	plikLogow << "W[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << wiadomosc << endl;
 	PolaczenieDoWysylki->writeC(wiadomosc);
 }
 
@@ -61,7 +61,7 @@ int main(int argc, char **argv)
 		odczyt = polaczenie.readC();
 		if(!odczyt.empty()){
 			cout << "ODCZYT: " << odczyt << endl;
-			plikLogow << "O:" << odczyt << endl;
+			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " odczyt << endl;
 			parser->Ask(odczyt);
 		}
     }
