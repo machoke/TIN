@@ -7,7 +7,6 @@
 #include <netinet/in.h>
 #include <unistd.h>
 #include "connection.h"
-#include <fcntl.h>
 #include <unistd.h>
 
 #define MAX_CONNECTION 1
@@ -31,9 +30,6 @@ Connection::Connection(int SERWER_PORT, std::string SERWER_IP) {
         perror( "blad socket" );
         exit(-1);
     }
-/// - - -	
-//	fcntl(gniazdo, F_SETFL, O_NONBLOCK);	
-	
 	gniazdo_clienta=0;
 }
 //s
@@ -63,9 +59,7 @@ void Connection::acceptS() {
         printf( "Waiting for connection...\n" );
         if(( gniazdo_clienta = accept( gniazdo,( struct sockaddr * ) & from, & len ) ) < 0 )
         {
-			
             perror( "accept() ERROR" );
-       //     continue;
         }
 }
 
@@ -146,7 +140,6 @@ void Connection::connectC() {
 
 void Connection::close() {
 	shutdown( gniazdo, SHUT_RDWR );
-	//close(gniazdo);
 }
 
 std::string Connection::getIP() {
