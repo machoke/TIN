@@ -70,14 +70,6 @@ int main(int argc, char **argv)
 	polaczenie.listenS();
 	polaczenie.acceptS();
 	
-	std::fstream fileLog;	// plik logów
-	fileLog.open( "log.txt", std::ios::out );
-	//otwieram plik z logami
-	if( !fileLog.good() ) {
-		std::cout << "Nie utworzono pliku do zapisu" << std::endl;
-		exit(1);
-	}
-	
 	std::cout << "Connected!" << std::endl;
 
 	parser = new Parser(conn->rulesFile.c_str());
@@ -129,7 +121,8 @@ int main(int argc, char **argv)
     pthread_mutex_destroy(&bufferMutex);
     polaczenie.close();	
     cout << "ZAMYKAM!" << endl;
-	fileLog.close();
+    
+    plikLogow.close();
 
 	return 0;
 }
