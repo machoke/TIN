@@ -53,14 +53,6 @@ int main(int argc, char **argv)
 
 	plikLogow.open(conn->logFile.c_str(), ios::out);
 
-
-	std::fstream fileLog;	// plik z komendami do wysylania
-	fileLog.open( "log.txt", std::ios::out );
-	if( !fileLog.good() ) {
-		std::cout << "Nie utworzono pliku do zapisu" << std::endl;
-		exit(1);
-	}
-
 	parser = new Parser(conn->rulesFile.c_str());
 	PolaczenieDoWysylki = &polaczenie;
 	parser->OutsideRespond = wyslij;
@@ -82,10 +74,8 @@ int main(int argc, char **argv)
     }
     
     polaczenie.close();
-	
     plikLogow.close();
 	
-	//-------------------------------------------------------------------------------
 	
 	
 	return 0;
