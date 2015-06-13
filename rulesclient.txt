@@ -6,6 +6,20 @@ ANSWER:
 Pogoda jest słaba.
 END.
 
+CYCLIC:
+5
+ANSWER:
+ODPOWIEDZ!
+QUESTION:
+MUSZE?
+ANSWER:
+TAK
+QUESTION:
+...ODPOWIADAM
+ANSWER:
+OK.
+END.
+
 
 QUESTION:
 Czy pogoda dzisiaj jest dobra?

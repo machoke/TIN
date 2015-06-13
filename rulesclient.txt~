@@ -6,26 +6,18 @@ ANSWER:
 Pogoda jest słaba.
 END.
 
-
-QUESTION:
+CYCLIC:
+5
+ANSWER:
 ODPOWIEDZ!
-ANSWER:
-MUSZE?
 QUESTION:
+MUSZE:
+ANSWER:
 TAK
-ANSWER:
+QUESTION:
 ...ODPOWIADAM
-QUESTION:
-OK.
-END.
-
-
-QUESTION:
-Cykliczna wiadomosc!
 ANSWER:
-Ping!
-QUESTION:
-Wporzo.
+OK.
 END.
 
 

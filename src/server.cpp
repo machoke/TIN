@@ -9,10 +9,6 @@
 #include <signal.h>
 #include "Parser/Parser.h"
 
-#define SERWER_PORT 8888
-#define SERWER_IP "127.0.0.1"
-
-
 pthread_mutex_t bufferMutex = PTHREAD_MUTEX_INITIALIZER;
 std::queue<string> CommandBuffor;
 
@@ -27,7 +23,7 @@ bool printLogs = false;
 
 void wyslij(string wiadomosc){
 	if(printLogs)
-		std::cout << "WYSLANO: " << wiadomosc << endl;
+		std::cout << "SEND: " << wiadomosc << endl;
 	plikLogow << "W[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << wiadomosc << endl;
 	PolaczenieDoWysylki->write(wiadomosc);
 }
@@ -47,7 +43,7 @@ void* CommunicationThread(void *ptr){
 		odczyt = PolaczenieDoWysylki->read();
 		if(!odczyt.empty()){
 			if(printLogs)
-				std::cout << "ODEBRANO: " << odczyt << endl;
+				std::cout << "RECEIVED: " << odczyt << endl;
 			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << odczyt << endl;
 			parser->Ask(odczyt);
 		}
@@ -87,7 +83,6 @@ int main(int argc, char **argv)
 	parser->Connect();
 
 	CyklicznyCzas = parser->getCyclicTime();
-	cout << CyklicznyCzas << endl;
 	signal(SIGALRM, Zegar);
 	alarm(CyklicznyCzas);
 
@@ -116,24 +111,36 @@ int main(int argc, char **argv)
 			CommandBuffor.push(command.substr(5, std::string::npos));
 			pthread_mutex_unlock(&bufferMutex);
 		}else
-			if(interpret_cmd.compare("exit")==0){
-				pthread_cancel(commThread);
-				break;
-			}else
-				if(interpret_cmd.compare("show")==0){
-					cout << "SHOW MODE!" << endl;
-					printLogs = true;
-					std::cin.ignore();
-					cout << "COMMAND MODE!" << endl;
-					printLogs = false;
-				}
+		if(interpret_cmd.compare("exit")==0){
+			pthread_cancel(commThread);
+			break;
+		}else
+		if(interpret_cmd.compare("debugrules")==0){
+			cout << "PRINTING PARSED RULES!" << endl;
+			parser->PrintRules();
+		}else
+		if(interpret_cmd.compare("help")==0){
+			cout << "TIN - PROJECT, help:\nAll server commands must be written lowercase.\n\n";
+			cout << "help - show this message\n";
+			cout << "send <message> - send some message, doesn't initiate a rule at server\n";
+			cout << "debugrules - print all parser rules by server\n";
+			cout << "show - enter show mode, when you can watch all the traffic that your server is making and receiving. Enter to returtn to command mode.\n";
+			cout << "exit - quit the program\n" << endl;
+		}else
+		if(interpret_cmd.compare("show")==0){
+			cout << "SHOW MODE!\nPress ENTER TO GO TO COMMAND MODE!" << endl;
+			printLogs = true;
+			std::cin.ignore();
+			cout << "COMMAND MODE!" << endl;
+			printLogs = false;
+		}
 		interpret_cmd = "";
 		command = "";
     }
     
     pthread_mutex_destroy(&bufferMutex);
     polaczenie.close();	
-    cout << "ZAMYKAM!" << endl;
+    cout << "CLOSING!" << endl;
     
     plikLogow.close();
 

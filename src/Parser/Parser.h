@@ -77,6 +77,7 @@ private:
 	vector<string> subexpressions;
 
 	int RuleStepID, RuleID;
+	bool DoCyclic;
 
 	regmatch_t pmatch[maxSubexpressions];
 

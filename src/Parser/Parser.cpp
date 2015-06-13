@@ -27,6 +27,7 @@ void Rule::AddStep(RuleStep step){
 Parser::Parser(const char* rules_filename){
 	RuleID = -1;
 	RuleStepID = -1;
+	DoCyclic = false;
 	fstream file;
 	bool one_connected_rule = false;
 	bool one_cyclic_rule = false;
@@ -183,17 +184,21 @@ void Parser::Connect(){
 }
 
 void Parser::Cyclic(){
-	for(unsigned int i = 0; i < rules.size(); i++){
-		if(rules[i].steps[0].type == Rule_CYCLIC){
-#ifdef DEBUG_LOG
-			cout << "CYCLIC found in rule!" << endl;
-#endif
-			RuleID = i;
-			RuleStepID = 1;
-			subexpressions.clear();
-			Work();
-			return;
+	if(RuleID == -1){
+		for(unsigned int i = 0; i < rules.size(); i++){
+			if(rules[i].steps[0].type == Rule_CYCLIC){
+	#ifdef DEBUG_LOG
+				cout << "CYCLIC found in rule!" << endl;
+	#endif
+				RuleID = i;
+				RuleStepID = 1;
+				subexpressions.clear();
+				Work();
+				return;
+			}
 		}
+	}else{
+		DoCyclic = true;
 	}
 }
 
@@ -260,6 +265,10 @@ void Parser::Work(){
 		if(!questions.empty()){
 			FindFirstQuestion();
 			Work();
+		}
+		if(DoCyclic){
+			Cyclic();
+			DoCyclic = false;
 		}
 		return;
 	}

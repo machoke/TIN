@@ -8,11 +8,6 @@
 #include <signal.h>
 #include <unistd.h>
 
-#define SERWER_PORT 8888
-#define SERWER_IP "127.0.0.1"
-
-
-pthread_mutex_t bufferMutex = PTHREAD_MUTEX_INITIALIZER;
 ConnectionSettings conn = ConnectionSettings();
 
 Connection* PolaczenieDoWysylki;
@@ -22,7 +17,7 @@ int CyklicznyCzas;
 fstream plikLogow;
 
 void wyslij(string wiadomosc){
-	std::cout << "WYSLANO: " << wiadomosc << endl;
+	std::cout << "SEND: " << wiadomosc << endl;
 	plikLogow << "W[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << wiadomosc << endl;
 	PolaczenieDoWysylki->writeC(wiadomosc);
 }
@@ -61,7 +56,7 @@ int main(int argc, char **argv)
     {
 		odczyt = polaczenie.readC();
 		if(!odczyt.empty()){
-			cout << "ODCZYT: " << odczyt << endl;
+			cout << "RECEIVED: " << odczyt << endl;
 			plikLogow << "O[" << PolaczenieDoWysylki->getIP() << ":" << PolaczenieDoWysylki->getPort() << "] " << odczyt << endl;
 			parser->Ask(odczyt);
 		}
