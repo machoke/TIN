@@ -1,7 +1,109 @@
-O:Nawiązałem połączenie. Czekam na jakąś odpowiedź.
-W:Proszę się zalogować.
-O:Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
-O:Login: root.Hasło: kot.
-W:Prawidłowe hasło.
-O:Dziękuję za logowanie.
-O:asoipdjfjipoasdf
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+W[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Ping!
+W[127.0.0.1:12345] Wporzo.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+O[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Cykliczna wiadomosc!
+O[127.0.0.1:12345] Cykliczna wiadomosc!
+CONNECTED
+O[127.0.0.1:12345] Nawiązałem połączenie. Czekam na jakąś odpowiedź.
+W[127.0.0.1:12345] Proszę się zalogować.
+O[127.0.0.1:12345] Dziękuję za odpowiedź. Moje następne wiadomości to login i hasło.
+O[127.0.0.1:12345] Login: root.Hasło: kot.
+W[127.0.0.1:12345] Prawidłowe hasło.
+O[127.0.0.1:12345] Dziękuję za logowanie.
+O[127.0.0.1:12345] Akuku!
+O[127.0.0.1:12345] Akuku!
+O[127.0.0.1:12345] Akuku!
+O[127.0.0.1:12345] Akuku!

@@ -34,8 +34,6 @@ void Zegar(int a){
 
 int main(int argc, char **argv)
 {
-	std::cout << "hello\n";
-
 	ConnectionSettings *conn;
 		if(argc == 2)
 			conn = new ConnectionSettings(argv[1]);
@@ -44,13 +42,16 @@ int main(int argc, char **argv)
 	Connection polaczenie = Connection(conn->port, conn->addressIP);
 	polaczenie.connectC();
 
-	plikLogow.open(conn->logFile.c_str(), ios::out);
+	plikLogow.open(conn->logFile.c_str(), ios::out|ios::app);
+
+	std::cout << "Connected!" << std::endl;
+	plikLogow << "CONNECTED"<< endl;
 
 	parser = new Parser(conn->rulesFile.c_str());
 	PolaczenieDoWysylki = &polaczenie;
 	parser->OutsideRespond = wyslij;
-	CyklicznyCzas = parser->getCyclicTime();
 
+	CyklicznyCzas = parser->getCyclicTime();
 	signal(SIGALRM, Zegar);
 	alarm(CyklicznyCzas);
 

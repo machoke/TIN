@@ -6,6 +6,7 @@
 #include <ctime>
 #include <pthread.h>
 #include <sstream>
+#include <signal.h>
 #include "Parser/Parser.h"
 
 #define SERWER_PORT 8888
@@ -17,6 +18,7 @@ std::queue<string> CommandBuffor;
 
 Connection* PolaczenieDoWysylki;
 Parser* parser;
+int CyklicznyCzas;
 
 fstream plikLogow;
 
@@ -52,6 +54,11 @@ void* CommunicationThread(void *ptr){
 	}
 }
 
+void Zegar(int a){
+	parser->Cyclic();
+	alarm(CyklicznyCzas);
+}
+
 int main(int argc, char **argv)
 {
 	pthread_t commThread;
@@ -63,20 +70,26 @@ int main(int argc, char **argv)
 		conn = new ConnectionSettings("conf_server.ini");
 	Connection polaczenie = Connection(conn->port, conn->addressIP);
 
-	plikLogow.open(conn->logFile.c_str(), ios::out);
+	plikLogow.open(conn->logFile.c_str(), ios::out|ios::app);
 
 	
 	polaczenie.bindS();
 	polaczenie.listenS();
 	polaczenie.acceptS();
-	
+
 	std::cout << "Connected!" << std::endl;
+	plikLogow << "CONNECTED"<< endl;
 
 	parser = new Parser(conn->rulesFile.c_str());
 	PolaczenieDoWysylki = &polaczenie;
 	parser->OutsideRespond = wyslij;
 
 	parser->Connect();
+
+	CyklicznyCzas = parser->getCyclicTime();
+	cout << CyklicznyCzas << endl;
+	signal(SIGALRM, Zegar);
+	alarm(CyklicznyCzas);
 
 	std::string tTemp, tText;
 	time_t czas = 0;
@@ -85,10 +98,10 @@ int main(int argc, char **argv)
 
 	string command, interpret_cmd;
 
-	cout << "LOGI NA EKRAN!" << endl;
+	cout << "SHOW MODE!" << endl;
 	printLogs = true;
 	std::cin.ignore();
-	cout << "TRYB KOMEND!" << endl;
+	cout << "COMMAND MODE!" << endl;
 	printLogs = false;
 
 	delete conn;
@@ -108,10 +121,10 @@ int main(int argc, char **argv)
 				break;
 			}else
 				if(interpret_cmd.compare("show")==0){
-					cout << "LOGI NA EKRAN!" << endl;
+					cout << "SHOW MODE!" << endl;
 					printLogs = true;
 					std::cin.ignore();
-					cout << "TRYB KOMEND!" << endl;
+					cout << "COMMAND MODE!" << endl;
 					printLogs = false;
 				}
 		interpret_cmd = "";

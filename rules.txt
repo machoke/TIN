@@ -6,6 +6,13 @@ ANSWER:
 Pogoda jest słaba.
 END.
 
+
+CYCLIC:
+5
+ANSWER:
+Akuku!
+END.
+
 QUESTION:
 Cykliczna wiadomosc!
 ANSWER:
